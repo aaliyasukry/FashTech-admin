@@ -1,18 +1,29 @@
 import './App.css';
+import './styles/style.css'
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AddItem from './pages/AddItem';
-import AddCategory from './pages/AddCategory';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoute from './Routes';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path='/' exact Component={AddCategory}/>
-        {/* <Route path='/' exact Component={AddItem}/> */}
-      </Routes>
+      <AppRoute />
+      <ToastContainer
+      className="toast-container"
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Router>
   );
-}
+};
 
 export default App;
