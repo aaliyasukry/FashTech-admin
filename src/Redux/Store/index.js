@@ -1,31 +1,21 @@
-import {applyMiddleware, createStore, compose} from 'redux';
-import {thunk} from 'redux-thunk';
-import {createBrowserHistory} from 'history';
-import {persistStore, persistReducer} from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import AppReducer from '../Reducers';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { thunk } from 'redux-thunk'; // Import correctly as named export
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from '../Reducers'; // Assuming rootReducer combines all reducers
 
 const persistConfig = {
-    key: 'root',
-    storage
+  key: 'root',
+  storage,
 };
 
-export const history = createBrowserHistory();
-const persistedReducer = persistReducer(persistConfig, AppReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const Store = (initialState) => {
-    const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-    const store = createStore(
-        persistedReducer,
-        initialState,
-        composeEnhancer(
-            applyMiddleware(thunk)
-        )
-    )
-    return {
-        store,
-        persistor: persistStore(store)
-    };
-};
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default Store;
+export const store = createStore(
+  persistedReducer,
+  composeEnhancer(applyMiddleware(thunk))
+);
+
+export const persistor = persistStore(store);

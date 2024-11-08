@@ -1,48 +1,84 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FiHome, FiShoppingCart, FiFileText, FiUserCheck, FiBarChart2 } from "react-icons/fi";
+import {
+  FiHome,
+  FiShoppingCart,
+  FiLogOut
+} from "react-icons/fi";
+import {
+  IoBagOutline,
+  IoLayersOutline,
+  IoShirtOutline
+} from "react-icons/io5";
+import { BsTags } from "react-icons/bs";
 
 const SideNavigation = ({ children }) => {
-  const [showMenu, setShowMenu] = useState(window.innerWidth <= 1050);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    const handleResize = () => setShowMenu(window.innerWidth <= 1050);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const handleNavigation = (path) => {
     navigate(path);
-    if (window.innerWidth <= 600) setShowMenu(true);
   };
 
   return (
-    <div>
-      <div className="left-sidenav">
-        <h1>App Name</h1>
-        <ul className="sidenav-menu">
-          <li className={location.pathname === "/dashboard" ? "active" : ""} onClick={() => handleNavigation("/dashboard")}>
-            <FiHome className="icon" /> {!showMenu && <span>Dashboard</span>}
-          </li>
-          <li className={location.pathname === "/store-list" ? "active" : ""} onClick={() => handleNavigation("/store-list")}>
-            <FiShoppingCart className="icon" /> {!showMenu && <span>Store List</span>}
-          </li>
-          <li className={location.pathname === "/order-detail" ? "active" : ""} onClick={() => handleNavigation("/order-detail")}>
-            <FiFileText className="icon" /> {!showMenu && <span>Order Detail</span>}
-          </li>
-          <li className={location.pathname === "/customer" ? "active" : ""} onClick={() => handleNavigation("/customer")}>
-            <FiUserCheck className="icon" /> {!showMenu && <span>Customer</span>}
-          </li>
-          <li className={location.pathname === "/report" ? "active" : ""} onClick={() => handleNavigation("/report")}>
-            <FiBarChart2 className="icon" /> {!showMenu && <span>Analytics</span>}
-          </li>
-        </ul>
-        <footer>&copy; 2024 Your Company. All rights reserved.</footer>
+    <div className="app-container">
+      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+        <div className="logo">
+          <i className="bx bx-menu menu-icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)}></i>
+          <span className="logo-name">FashTech</span>
+        </div>
+
+        <div className="sidebar-content">
+          <ul className="lists">
+            <li className="list" onClick={() => handleNavigation("/dashboard")}>
+              <a className={`nav-link ${location.pathname === "/dashboard" ? "active" : ""}`}>
+                <FiHome className="icon" />
+                <span className="link">Dashboard</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/items")}>
+              <a className={`nav-link ${location.pathname === "/items" ? "active" : ""}`}>
+                <IoShirtOutline className="icon" />
+                <span className="link">Items</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/variants")}>
+              <a className={`nav-link ${location.pathname === "/variants" ? "active" : ""}`}>
+                <IoLayersOutline className="icon" />
+                <span className="link">Variants</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/pieces")}>
+              <a className={`nav-link ${location.pathname === "/pieces" ? "active" : ""}`}>
+                <BsTags className="icon" />
+                <span className="link">Pieces</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/report")}>
+              <a className={`nav-link ${location.pathname === "/report" ? "active" : ""}`}>
+                <IoBagOutline className="icon" />
+                <span className="link">Bags</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/checkout")}>
+              <a className={`nav-link ${location.pathname === "/checkout" ? "active" : ""}`}>
+                <FiShoppingCart className="icon" />
+                <span className="link">Checkout</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/logout")}>
+              <a className={`nav-link ${location.pathname === "/logout" ? "active" : ""}`}>
+                <FiLogOut className="icon" />
+                <span className="link">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div className="page-wrapper" style={{ marginLeft: showMenu ? "60px" : "200px" }}>
-        <div className="page-content">{children}</div>
+
+      <div className="content">
+        {children}
       </div>
     </div>
   );

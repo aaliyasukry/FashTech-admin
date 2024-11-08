@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import itemService from '../../services/itemService';
+import itemService from '../../Services/itemService';
 import AddItemModal from './addItemModal';
 
 const Items = () => {
   const [items, setItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Fetch items when component mounts
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await itemService.getItems();
-        setItems(response.data);  // Set the items from API response
+        setItems(response.data);
       } catch (error) {
         console.error('Error fetching items:', error);
       }
@@ -22,19 +20,17 @@ const Items = () => {
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
-
-  // Handle adding the new item to the list
   const handleItemAdded = (newItem) => {
-    setItems((prevItems) => [...prevItems, newItem]);  // Append new item to the items list
-    handleCloseModal();  // Close the modal after adding item
+    setItems((prevItems) => [...prevItems, newItem]);
+    handleCloseModal();
   };
 
   return (
     <div>
       <h2>Items List</h2>
       <button onClick={handleOpenModal}>Add Item</button>
-      
-      <table>
+
+      <table className="styled-table">
         <thead>
           <tr>
             <th>Item ID</th>
@@ -48,8 +44,8 @@ const Items = () => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
-            <tr key={item.ItemId}>
+          {items.map((item, index) => (
+            <tr key={item.ItemId} className={index % 2 === 1 ? "active-row" : ""}>
               <td>{item.ItemId}</td>
               <td>{item.Name}</td>
               <td>{item.Description}</td>
@@ -62,8 +58,6 @@ const Items = () => {
           ))}
         </tbody>
       </table>
-
-      {/* Render AddItemModal if isModalOpen is true */}
       {isModalOpen && <AddItemModal onClose={handleCloseModal} onItemAdded={handleItemAdded} />}
     </div>
   );

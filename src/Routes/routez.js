@@ -1,12 +1,21 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import ProtectedRoute from './protectedRoute';
 import Login from '../Components/Login/login';
 import Dashboard from '../Components/Dashboard';
 import Items from '../Components/Items';
 import Variants from '../Components/Variants';
+import Pieces from '../Components/Pieces';
 
-const Routez = ({ isAuthenticated, onLogin }) => {
+const Routez = ({ isAuthenticated, onLogin, onLogout }) => {
+  const location = useLocation();
+  useEffect(() => {
+    if (isAuthenticated) {
+      localStorage.setItem('lastRoute', location.pathname);
+    }
+  }, [isAuthenticated, location]);
+
   const dashboardRoutes = {
     items: '/items',
     variants: '/variants',
@@ -18,34 +27,13 @@ const Routez = ({ isAuthenticated, onLogin }) => {
   return (
     <Routes>
       <Route path="/" element={<Login onLogin={onLogin} />} />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
-            <Dashboard routes={dashboardRoutes} />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/items"
-        element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
-            <Items /> {/* Display the Items component */}
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/variants"
-        element={
-          <ProtectedRoute isAuthenticated={isAuthenticated}>
-            <Variants />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="*"
-        element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />}
-      />
+      <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} routes={dashboardRoutes} />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/items" element={<Items />} />
+        <Route path="/variants" element={<Variants />} />
+        <Route path="/pieces" element={<Pieces />} />
+      </Route>
+      <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />} />
     </Routes>
   );
 };

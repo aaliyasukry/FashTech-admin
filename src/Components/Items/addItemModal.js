@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import itemService from '../../services/itemService';
+import itemService from '../../Services/itemService';
 
 const AddItemModal = ({ onClose, onItemAdded }) => {
   const [itemData, setItemData] = useState({

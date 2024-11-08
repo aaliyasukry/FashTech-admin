@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AddVariantModal from './addVariantModal';
-import variantService from '../../services/variantService';
+import variantService from '../../Services/variantService';
 
 const Variants = () => {
   const [variants, setVariants] = useState([]);
@@ -36,7 +36,7 @@ const Variants = () => {
     <div>
       <h2>Variants</h2>
       <button onClick={handleOpenModal}>Add Variant</button>
-      <table>
+      <table className="styled-table"> {/* Same class as Items table */}
         <thead>
           <tr>
             <th>VariantId</th>

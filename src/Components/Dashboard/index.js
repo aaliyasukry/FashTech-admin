@@ -1,8 +1,10 @@
+// Dashboard.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const Dashboard = ({ routes }) => {
+const Dashboard = () => {
   const navigate = useNavigate();
+  const { routes } = useOutletContext(); // Access routes from Outlet context
 
   const handleButtonClick = (path) => {
     navigate(path);
