@@ -65,7 +65,7 @@ const AddEditVariantModal = ({ onClose, variant }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <h2>Add New Variant</h2>
+                <h2>{variant ? 'Edit Variant' : 'Add New Variant'}</h2>
                 <input
                     type="text"
                     name="ItemId"
