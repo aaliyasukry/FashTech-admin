@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import pieceService from '../../Services/pieceService';
+import pieceService from '../../services/pieceService';
 
 const AddPieceModal = ({ onClose, onPieceAdded }) => {
   const [pieceData, setPieceData] = useState({

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AddPieceModal from './addPieceModal';
-import pieceService from '../../Services/pieceService';
+import pieceService from '../../services/pieceService';
 
 const Pieces = () => {
   const [pieces, setPieces] = useState([]);

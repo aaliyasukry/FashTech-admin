@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AddVariantModal from './addVariantModal';
-import variantService from '../../Services/variantService';
+import variantService from '../../services/variantService';
 
 const Variants = () => {
   const [variants, setVariants] = useState([]);

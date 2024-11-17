@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import variantService from '../../Services/variantService';
+import variantService from '../../services/variantService';
 
 const AddVariantModal = ({ onClose, onVariantAdded }) => {
     const [variantData, setVariantData] = useState({
