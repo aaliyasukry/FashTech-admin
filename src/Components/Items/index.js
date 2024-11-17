@@ -61,7 +61,6 @@ const Items = () => {
       <h2>Items List</h2>
       <button onClick={handleOpenModal}>Add Item</button>
 
-      {/* Table to display items */}
       <table className="styled-table">
         <thead>
           <tr>

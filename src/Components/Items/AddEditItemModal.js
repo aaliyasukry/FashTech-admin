@@ -48,7 +48,7 @@ const AddEditItemModal = ({ onClose, item }) => {
 
   const handleSaveItem = async () => {
     const parsedItemData = parseNumericFields(itemData);
-    console.log('Parsed Item Data:', parsedItemData);
+    
     try {
       setLoading(true);
 

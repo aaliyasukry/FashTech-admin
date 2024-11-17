@@ -27,13 +27,11 @@ export const addItem = async (newItem) => {
 
 export const updateItem = async (id, itemData) => {
   try {
-    console.log(id, "Request data:", itemData);
     const response = await axios.put(`${API_URL}/items/${id}`, itemData, {
       headers: {
         "Content-Type": "application/json",
     }   
   });
-    console.log("Response:", response.data);
     if (response.data.success) {
       console.log("Item updated successfully");
     }
