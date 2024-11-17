@@ -7,6 +7,7 @@ import Dashboard from '../Components/Dashboard';
 import Items from '../Components/Items';
 import Variants from '../Components/Variants';
 import Pieces from '../Components/Pieces';
+import Category from '../Components/Category';
 
 const Routez = ({ isAuthenticated, onLogin, onLogout }) => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const Routez = ({ isAuthenticated, onLogin, onLogout }) => {
     pieces: '/pieces',
     bags: '/bags',
     checkout: '/checkout',
+    categories: '/categories',
   };
 
   return (
@@ -29,6 +31,7 @@ const Routez = ({ isAuthenticated, onLogin, onLogout }) => {
       <Route path="/" element={<Login onLogin={onLogin} />} />
       <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} routes={dashboardRoutes} />}>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path='/categories' element={<Category/>}/>
         <Route path="/items" element={<Items />} />
         <Route path="/variants" element={<Variants />} />
         <Route path="/pieces" element={<Pieces />} />

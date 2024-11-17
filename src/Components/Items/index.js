@@ -1,28 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import itemService from '../../services/itemService';
-import AddItemModal from './addItemModal';
+import { getItems, deleteItem } from '../../services/itemService'; // Importing getItems from the service file
+import AddEditItemModal from './AddEditItemModal';
+import { FaEdit, FaTrash, FaEllipsisH } from 'react-icons/fa'; 
 
 const Items = () => {
-  const [items, setItems] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [items, setItems] = useState([]); // State to hold fetched items
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [editingItem, setEditingItem] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch items when component mounts
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await itemService.getItems();
-        setItems(response.data);
+        const data = await getItems(); 
+        if (data && data.success) {
+          setItems(data.data); 
+        } else {
+          console.error('Failed to fetch items');
+        }
       } catch (error) {
         console.error('Error fetching items:', error);
       }
     };
+    fetchItems(); 
+  }, []); 
 
-    fetchItems();
-  }, []);
-
+  // Handle modal open/close
   const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
-  const handleItemAdded = (newItem) => {
-    setItems((prevItems) => [...prevItems, newItem]);
-    handleCloseModal();
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingItem(null);
+  };
+
+  const handleEditItem = (item) => {
+    setEditingItem(item);
+    handleOpenModal(); 
+  };
+
+  // Handle delete item action
+  const handleDeleteItem = async (itemId) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this category?");
+    if (!isConfirmed) return;
+
+    try {
+      setLoading(true);
+      await deleteItem(itemId);
+      alert('Item deleted successfully!');
+      setItems((prevItems) => prevItems.filter(item => item.ItemId !== itemId));
+    } catch (error) {
+      console.error('Error deleting item:', error);
+      alert("Failed to delete item.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,6 +61,7 @@ const Items = () => {
       <h2>Items List</h2>
       <button onClick={handleOpenModal}>Add Item</button>
 
+      {/* Table to display items */}
       <table className="styled-table">
         <thead>
           <tr>
@@ -41,24 +73,49 @@ const Items = () => {
             <th>Category ID</th>
             <th>Material</th>
             <th>Type</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
-            <tr key={item.ItemId} className={index % 2 === 1 ? "active-row" : ""}>
-              <td>{item.ItemId}</td>
-              <td>{item.Name}</td>
-              <td>{item.Description}</td>
-              <td>{item.Price}</td>
-              <td>{item.StockQuantity}</td>
-              <td>{item.CategoryId}</td>
-              <td>{item.Material}</td>
-              <td>{item.Type}</td>
+          {items && Array.isArray(items) && items.length > 0 ? (
+            items.map((item) => (
+              <tr key={item.ItemId}>
+                <td>{item.ItemId}</td>
+                <td>{item.Name}</td>
+                <td>{item.Description}</td>
+                <td>{item.Price}</td>
+                <td>{item.StockQuantity}</td>
+                <td>{item.CategoryId}</td>
+                <td>{item.Material}</td>
+                <td>{item.Type}</td>
+                <td>
+                  <button onClick={() => handleEditItem(item)} title="Edit">
+                    <FaEdit /> {/* Edit Icon */}
+                  </button>
+                  <button onClick={() => handleDeleteItem(item.ItemId)} title="Delete">
+                    <FaTrash /> {/* Delete Icon */}
+                  </button>
+                  <button onClick={() => console.log('More actions')} title="More">
+                    <FaEllipsisH /> {/* More Icon (Ellipsis) */}
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="8">No items available</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
-      {isModalOpen && <AddItemModal onClose={handleCloseModal} onItemAdded={handleItemAdded} />}
+
+      {/* Modal for adding or editing an item */}
+      {isModalOpen && (
+        <AddEditItemModal
+          item={editingItem}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };

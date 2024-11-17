@@ -10,7 +10,8 @@ import {
   IoLayersOutline,
   IoShirtOutline
 } from "react-icons/io5";
-import { BsTags } from "react-icons/bs";
+import { BsFillClipboardCheckFill, BsTags } from "react-icons/bs";
+import { RiFilePaper2Fill } from "react-icons/ri";
 
 const SideNavigation = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -35,6 +36,12 @@ const SideNavigation = ({ children }) => {
               <a className={`nav-link ${location.pathname === "/dashboard" ? "active" : ""}`}>
                 <FiHome className="icon" />
                 <span className="link">Dashboard</span>
+              </a>
+            </li>
+            <li className="list" onClick={() => handleNavigation("/categories")}>
+              <a className={`nav-link ${location.pathname === "/categories" ? "active" : ""}`}>
+                <RiFilePaper2Fill className="icon" />
+                <span className="link">Category</span>
               </a>
             </li>
             <li className="list" onClick={() => handleNavigation("/items")}>
