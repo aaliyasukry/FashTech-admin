@@ -49,12 +49,11 @@ const AddEditItemModal = ({ onClose, item }) => {
   const handleSaveItem = async () => {
     const parsedItemData = parseNumericFields(itemData);
     console.log('Parsed Item Data:', parsedItemData);
-    
     try {
       setLoading(true);
 
       if (item) {
-        await updateItem(item.id, parsedItemData);
+        await updateItem(item.ItemId, parsedItemData);
         alert('Item updated Successfully');
       } else {
         await addItem(itemData);

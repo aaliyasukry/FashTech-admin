@@ -25,23 +25,20 @@ export const addItem = async (newItem) => {
   }
 };
 
-export const updateItem = async (id, params) => {
+export const updateItem = async (id, itemData) => {
   try {
-    // Make the API call to update the item
-    const response = await axios.put(`${API_URL}/items/${id}`, null, {
-      params,
-    });
-
-    // Handle the response
-    if (response.status === 200) {
-      console.log('Item updated successfully:', response.data);
-      return response.data;
-    } else {
-      console.error('Failed to update item:', response.data);
+    console.log(id, "Request data:", itemData);
+    const response = await axios.put(`${API_URL}/items/${id}`, itemData, {
+      headers: {
+        "Content-Type": "application/json",
+    }   
+  });
+    console.log("Response:", response.data);
+    if (response.data.success) {
+      console.log("Item updated successfully");
     }
   } catch (error) {
-    console.error('Error updating item:', error.message);
-    throw new Error('Error updating the item');
+    console.error("Error updating item:", error);
   }
 };
 
