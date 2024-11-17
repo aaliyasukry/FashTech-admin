@@ -62,8 +62,8 @@ const SideNavigation = ({ children }) => {
                 <span className="link">Pieces</span>
               </a>
             </li>
-            <li className="list" onClick={() => handleNavigation("/report")}>
-              <a className={`nav-link ${location.pathname === "/report" ? "active" : ""}`}>
+            <li className="list" onClick={() => handleNavigation("/bags")}>
+              <a className={`nav-link ${location.pathname === "/bags" ? "active" : ""}`}>
                 <IoBagOutline className="icon" />
                 <span className="link">Bags</span>
               </a>

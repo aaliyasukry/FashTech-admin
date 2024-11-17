@@ -384,3 +384,119 @@ button {
 .modal-content button:last-of-type:hover {
     background-color: #949191;
 }
+
+/*Checkout*/
+.checkout-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkout-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .rfid-scan-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .rfid-scan-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .rfid-scan-section button:hover {
+    background-color: #0056b3;
+  }
+  
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .cart-item-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .cart-item-info {
+    flex: 1;
+  }
+  
+  .cart-item-info h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  .cart-item-info p {
+    margin: 3px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .cart-item-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .cart-total h4 {
+    font-size: 18px;
+  }
+  
+  .checkout-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .checkout-button:hover {
+    background-color: #218838;
+  }
+  
+  .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  
